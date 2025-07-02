@@ -1,0 +1,11 @@
+select email from sales.customers
+select first_name, email from sales.customers 
+
+select * from sales.customers 
+select distinct brand from sales.products
+
+select brand, model_year from sales.products
+
+select email, state from sales.customers where state = 'SC' or state = 'MS'
+
+select email, birth_date from sales.customers where birth_date < '1991-01-01'	
