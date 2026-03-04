@@ -1,0 +1,96 @@
+/* DEMANDA 1: Inteligência de Marketing 🚙
+Retornar todos os dados dos clientes (sales.customers) que:
+1. NÃO moram no estado de 'SP' (coluna state)
+2. Possuem score entre 700 e 1000
+*/
+
+-- Escreva seu código para a Demanda 1 aqui:
+SELECT *
+FROM sales.customers
+WHERE 
+	(NOT state = 'SP') AND score BETWEEN 700 AND 1000
+
+/* DEMANDA 2: Resumo de Performance 📊
+Na tabela de produtos (sales.products), calcular:
+1. O menor preço (Preço Mínimo)
+2. O maior preço (Preço Máximo)
+3. O preço médio (Preço Médio)
+Filtrar apenas pela marca 'HONDA'
+*/
+
+-- Escreva seu código para a Demanda 2 aqui:
+SELECT 
+	MIN(price) AS menor_preco,
+	MAX(price) AS maior_preco,
+	AVG(price) AS preco_medio
+FROM sales.products
+WHERE brand ILIKE 'honda' 
+
+-- WHERE brand IN ('HONDA') funcionaria, mas usei o ILIKE para evitar problemas
+
+/* DEMANDA 3: Prospecção de Clientes 🔎
+O setor de vendas quer identificar clientes para uma nova parceria regional.
+Retorne todos os dados dos clientes (sales.customers) que:
+1. Tenham o primeiro nome começando com 'MA' (não importa se maiúsculo ou minúsculo)
+2. Ocupem um status profissional (a coluna professional_status NÃO pode estar vazia)
+3. Morem nos estados de 'MG', 'RJ' ou 'ES'
+*/
+
+-- Escreva seu código para a Demanda 3 aqui:
+SELECT *
+FROM sales.customers
+WHERE 
+	first_name ILIKE ('ma%') 
+	AND professional_status NOTNULL
+	AND state IN('MG', 'RJ', 'ES')
+
+SELECT DISTINCT ON (professional_status) *
+FROM sales.customers 
+
+-- Baseada ma query acima e com o filtro IS NULL, constatei que não há clientes com professional_status = null
+
+/* DEMANDA 4: Sucesso de Conversão 🛒
+A equipe de produto quer entender o volume de vendas concluídas no início de 2021.
+Na tabela de funil (sales.funnel), calcule:
+1. O total de visitas que resultaram em pagamento (onde paid_date não é nulo)
+2. A quantidade de PRODUTOS ÚNICOS que foram vendidos (pagos)
+3. Filtre apenas para visitas que ocorreram entre '2021-01-01' e '2021-03-31'
+*/
+
+-- Escreva seu código para a Demanda 4 aqui:
+SELECT 
+	COUNT(*) AS total_visitas_pagantes,
+	COUNT(DISTINCT product_id) AS quantidade_produtos_unicos_vendidos
+FROM sales.funnel
+WHERE 
+	visit_page_date BETWEEN '2021-01-01' AND '2021-03-31'
+	AND paid_date NOTNULL
+
+	
+/*
+conferi com as querys:
+
+SELECT distinct on (product_id) *
+FROM sales.funnel
+WHERE visit_page_date BETWEEN '2021-01-01' AND '2021-03-31'
+	AND paid_date NOTNULL
+
+= 96 linhas
+
+SELECT *
+FROM sales.funnel
+WHERE paid_date notNull
+	AND visit_page_date BETWEEN '2021-01-01' AND '2021-03-31'
+
+= 254 linhas
+*/
+
+/* DEMANDA 5: Análise Demográfica de Expansão 🗺️
+Para planejar novas lojas, precisamos olhar para a tabela temp_tables.regions.
+Retorne:
+1. A média de população das cidades
+2. A população da maior cidade cadastrada
+3. Filtre apenas para cidades da região 'SUL' que tenham a população informada
+*/
+
+-- Escreva seu código para a Demanda 5 aqui:
