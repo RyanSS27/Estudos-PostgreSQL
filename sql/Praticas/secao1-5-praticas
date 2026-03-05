@@ -60,12 +60,11 @@ Na tabela de funil (sales.funnel), calcule:
 -- Escreva seu código para a Demanda 4 aqui:
 SELECT 
 	COUNT(*) AS total_visitas_pagantes,
-	COUNT(DISTINCT product_id) AS quantidade_produtos_unicos_vendidos
+	COUNT(DISTINCT product_id) AS produtos_unicos_vendidos
 FROM sales.funnel
 WHERE 
 	visit_page_date BETWEEN '2021-01-01' AND '2021-03-31'
-	AND paid_date NOTNULL
-
+	AND paid_date IS NOT NULL
 	
 /*
 conferi com as querys:
@@ -94,3 +93,32 @@ Retorne:
 */
 
 -- Escreva seu código para a Demanda 5 aqui:
+SELECT 
+	AVG(population) AS media_populacao_das_cidades,
+	MAX(population) AS maior_populacao_registrada
+FROM temp_tables.regions
+WHERE region ILIKE 'região sul'
+
+/* DESAFIO FINAL: Relatório Executivo de Vendas 2021 🚙
+---------------------------------------------------------
+Objetivo: Gerar uma visão consolidada do funil de vendas para a diretoria.
+Tabela: sales.funnel
+
+Demandas:
+1. Total de Visitas: Contagem de todos os registros do período.
+2. Vendas Concluídas: Contagem de registros com data de pagamento preenchida.
+3. Alcance de Clientes: Quantidade de clientes ÚNICOS que visitaram a loja.
+4. Filtro Temporal: Apenas visitas ocorridas no ano de 2021.
+
+Dica: Tente usar nomes de colunas claros (Ex: total_visitas, total_vendas, clientes_unicos).
+---------------------------------------------------------
+*/
+
+-- Escreva seu código para o Desafio Final aqui:
+
+SELECT
+	COUNT(visit_page_date) AS visitas,
+	COUNT(paid_date) AS vendas_concluidas,
+	COUNT(DISTINCT customer_id) AS novos_visitantes
+FROM sales.funnel
+WHERE visit_page_date BETWEEN '2021-01-01' AND '2021-12-31'
