@@ -36,3 +36,10 @@ FROM sales.customers
 SELECT state
 FROM sales.customers
 GROUP BY state
+
+-- RESUMO ##########################################################################
+-- (1) Serve para agrupar registros semelhantes de uma coluna,
+-- (2) Normalmente utilizado em conjunto com as Funções de agregação
+-- (3) Pode-se referenciar a coluna a ser agrupada pela sua posição ordinal
+-- (ex: GROUP BY 1,2,3 irá agrupar pelas 3 primeiras colunas da tabela (prefira não usar para manter melhor legibilidade))
+-- (4) O GROUP BY sozinho funciona como um DISTINCT, eliminando linhas duplicadas
