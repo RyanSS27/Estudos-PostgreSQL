@@ -1,0 +1,35 @@
+-- PARA QUE SERVE ##################################################################
+-- Serve para filtrar linhas da seleção por uma coluna agrupada
+
+-- EXEMPLOS ########################################################################
+
+-- (Exemplo 1) seleção com filtro no HAVING
+-- Calcule o nº de clientes por estado filtrando apenas estados acima de 100 clientes
+SELECT 
+	state,
+	count(*) AS clientes
+from sales.customers
+GROUP BY state
+-- WHERE COUNT(*) > 100 
+HAVING COUNT(*) > 100
+
+-- O WHERE não funciona com colunas agragadas
+
+SELECT 
+	state,
+	count(*) AS clientes
+from sales.customers
+WHERE state <> 'MG'  
+GROUP BY state
+HAVING COUNT(*) > 100
+
+-- Já o HAVING funciona com colunas não agregadas
+
+SELECT 
+	state,
+	count(*) AS clientes
+from sales.customers
+GROUP BY state 
+HAVING 
+	COUNT(*) > 100
+	AND state <> 'MG' 
